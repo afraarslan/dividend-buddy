@@ -1,10 +1,13 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, { useState, useEffect } from "react";
+import { View, Text, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import EvilIcons from "react-native-vector-icons/EvilIcons";
+import EvilIcons from "react-native-vector-icons/EvilIcons"; 
+import StockSearchModal from '../../components/StockSearchModal';
 
 export default function HomeScreen() {
+    const [isModalVisible, setModalVisibility] = useState(false)
+
     return (
         <SafeAreaView style={{ flexGrow: 1, backgroundColor: "#3fc295"}} edges={["top"]}>
             <View >
@@ -16,7 +19,9 @@ export default function HomeScreen() {
                         <Text style={{fontSize: 20, color: "white", fontWeight: "bold" }}> Dividend Income </Text>
                     </View>
                     <View style={{ width: 50, justifyContent: "center", alignItems: "center" }}>
-                       <EvilIcons name="plus" size={32} color={"white"}></EvilIcons>
+                        <TouchableOpacity onPress={() => setModalVisibility(true)}>
+                            <EvilIcons name="plus" size={32} color={"white"}></EvilIcons>
+                       </TouchableOpacity>
                     </View>
                 </View>
                 <View style={{height: 90, justifyContent: "center", alignItems: "center"}}>
@@ -37,7 +42,20 @@ export default function HomeScreen() {
             <View style={{ flex: 1, backgroundColor: "black" }}>
             <Text> Daily </Text>
             </View>
+            { isModalVisible && (
+                <StockSearchModal 
+                    stocks={[{"ticker": "APPL", "name": "Apple"}]}
+                    onStockSearch={(text) => {
+                        setModalVisibility(true)
+                    }}
+                    onStockPress={(stock) => {
+                        setModalVisibility(false)
+                    }}
+                    onClose={() => {
+                        setModalVisibility(false)
+                    }} 
+                />) 
+            }
         </SafeAreaView>
-        
     )
 }
