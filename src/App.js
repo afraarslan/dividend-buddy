@@ -31,17 +31,19 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from './containers/home/Home';
 import SettingsScreen from './containers/settings/Settings';
+import { Provider } from 'react-redux';
+import store from './redux/configureStore'
 
 const Tab = createBottomTabNavigator()
 
 const App: () => React$Node = () => {
   return (
+    <Provider store={store}>
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={({route}) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
-
             if(route.name==="Home"){
               return <Ionicons name={"ios-home"} size={size} color={color} />;
             }
@@ -67,6 +69,7 @@ const App: () => React$Node = () => {
         <Tab.Screen name="Settings" component={SettingsScreen}/>
       </Tab.Navigator>
     </NavigationContainer>
+    </Provider>
   );
 };
 
