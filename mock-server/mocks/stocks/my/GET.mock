@@ -1,0 +1,14 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{
+   status : "ok",
+   data : [
+       {
+           ticker : "APPL",
+           name : "Apple",
+           price : 320.0
+           dividend : 10
+       }
+   ]
+}
