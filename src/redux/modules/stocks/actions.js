@@ -1,1 +1,3 @@
 export const STORE_ALL_STOCKS = "STORE_ALL_STOCKS";
+export const FILTER_STOCKS = "FILTER_STOCKS";
+export const RESET_STOCKS = "RESET_STOCKS";
