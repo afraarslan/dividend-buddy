@@ -8,10 +8,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {loadAllStocks} from '../../redux/modules/stocks/thunkActions';
 import {$A} from '../../redux/helper';
 import * as $SA from '../../redux/modules/stocks/actions';
+import StockEditModal from '../../components/StockEditModal';
 
 export default function HomeScreen() {
   const allStocks = useSelector((state) => state.stocks.allStocks);
   const filteredStocks = useSelector((state) => state.stocks.filteredStocks);
+  const selectedStock = useSelector((state) => state.stocks.selectedStock);
   const [isModalVisible, setModalVisibility] = useState(false);
   const dispatch = useDispatch();
 
@@ -85,6 +87,14 @@ export default function HomeScreen() {
           }}
           onClose={() => {
             dispatch($A($SA.RESET_STOCKS));
+            setModalVisibility(false);
+          }}
+        />
+      )}
+      {selectedStock && (
+        <StockEditModal
+          stock={{ticker: 'AA', name: 'aa'}}
+          onClose={() => {
             setModalVisibility(false);
           }}
         />

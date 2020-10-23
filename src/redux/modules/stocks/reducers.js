@@ -9,8 +9,8 @@ const initialState = {
   //   monthly: null,
   //   daily: null,
   // },
-  // selectedStock: null,
-  // selectedStockInfo: null,
+  selectedStock: null,
+  selectedStockInfo: null,
 };
 
 export default function reducer(state = initialState, action) {
