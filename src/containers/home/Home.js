@@ -83,6 +83,7 @@ export default function HomeScreen() {
             dispatch($A($SA.FILTER_STOCKS, text));
           }}
           onStockPress={(stock) => {
+            dispatch($A($SA.SET_SELECTED_STOCK, stock))
             setModalVisibility(false);
           }}
           onClose={() => {
@@ -93,9 +94,9 @@ export default function HomeScreen() {
       )}
       {selectedStock && (
         <StockEditModal
-          stock={{ticker: 'AA', name: 'aa'}}
+          stock={selectedStock}
           onClose={() => {
-            setModalVisibility(false);
+            dispatch($A($SA.RESET_SELECTED_STOCK))
           }}
         />
       )}

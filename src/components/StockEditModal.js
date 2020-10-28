@@ -58,6 +58,7 @@ export default function StockEditModal(props) {
               onChangeText={props.onStockSearch}
               style={{
                 padding: 8,
+                width: 200,
                 backgroundColor: '#1c1c1e',
                 color: 'white',
                 fontSize: 24,
@@ -70,7 +71,7 @@ export default function StockEditModal(props) {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Button title="Save Changes"></Button>
+            <Button title="Save Changes" onPress={props.onClose}></Button>
           </View>
         </View>
       </SafeAreaView>

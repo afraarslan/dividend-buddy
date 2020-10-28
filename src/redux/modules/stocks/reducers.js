@@ -40,6 +40,18 @@ export default function reducer(state = initialState, action) {
         filteredStocks: state.allStocks,
       };
     }
+    case $SA.SET_SELECTED_STOCK: {
+      return {
+        ...state,
+        selectedStock: payload,
+      };
+    }
+    case $SA.RESET_SELECTED_STOCK: {
+      return {
+        ...state,
+        selectedStock: null,
+      };
+    }
     default: {
       return state;
     }
