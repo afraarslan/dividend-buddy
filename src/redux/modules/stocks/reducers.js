@@ -4,14 +4,28 @@ const initialState = {
   allStocks: [], // [{ticker : .., name : ...}]
   filteredStocks: [],
   addedStocks: [], // {stock : {ticker : .., name : ...}, count : XXX}
-  // dividends: {
-  //   annually: null,
-  //   monthly: null,
-  //   daily: null,
-  // },
+  dividends: {
+    annually: null,
+    monthly: null,
+    daily: null,
+  },
   selectedStock: null,
   selectedStockInfo: null,
 };
+
+const dividendCalculator = function (accumulator, stockInfo) {
+  return accumulator + stockInfo.stock.dividend * stockInfo.count;
+};
+
+function calculateDividens(addedStocks) {
+  let annuallyDividendsTotal = addedStocks.reduce(dividendCalculator, 0);
+
+  return {
+    annually: annuallyDividendsTotal,
+    monthly: annuallyDividendsTotal / 12,
+    daily: annuallyDividendsTotal / 365,
+  };
+}
 
 export default function reducer(state = initialState, action) {
   const {payload} = action;
@@ -87,6 +101,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         addedStocks: updatedAddedStocks,
+        dividends: calculateDividens(updatedAddedStocks),
         selectedStock: null,
         selectedStockInfo: null,
       };
