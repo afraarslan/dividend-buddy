@@ -20,34 +20,45 @@ function formatDividend(number) {
 
 const StockItem = (props) => {
   const {ticker, name} = props.stock;
+  const {theme, activeTheme} = useSelector((state) => state.profile);
+
   return (
     <TouchableOpacity
       style={{
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#1c1c1e',
+        backgroundColor: theme[activeTheme].secondary,
       }}
       onPress={props.onPress}>
       <View style={{padding: 20}}>
-        <Text style={{fontSize: 20, fontWeight: 'bold', color: '#3fc295'}}>
+        <Text
+          style={{
+            fontSize: 20,
+            fontWeight: 'bold',
+            color: theme.primary,
+          }}>
           {ticker}
         </Text>
-        <Text style={{fontSize: 16, color: 'white'}}>{name}</Text>
+        <Text style={{fontSize: 16, color: theme[activeTheme].textSecondary}}>
+          {name}
+        </Text>
       </View>
       <View style={{padding: 20}}>
-        <Text style={{fontSize: 20, color: 'white'}}>{props.count}</Text>
+        <Text style={{fontSize: 20, color: theme[activeTheme].textSecondary}}>
+          {props.count}
+        </Text>
       </View>
     </TouchableOpacity>
   );
 };
 
 export default function HomeScreen() {
-  const allStocks = useSelector((state) => state.stocks.allStocks);
-  const filteredStocks = useSelector((state) => state.stocks.filteredStocks);
-  const addedStocks = useSelector((state) => state.stocks.addedStocks);
-  const dividends = useSelector((state) => state.stocks.dividends);
-  const selectedStock = useSelector((state) => state.stocks.selectedStock);
+  const {filteredStocks, addedStocks, dividends, selectedStock} = useSelector(
+    (state) => state.stocks,
+  );
+  const {theme, activeTheme} = useSelector((state) => state.profile);
+
   const [isModalVisible, setModalVisibility] = useState(false);
   const dispatch = useDispatch();
 
@@ -57,7 +68,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView
-      style={{flexGrow: 1, backgroundColor: '#3fc295'}}
+      style={{flexGrow: 1, backgroundColor: theme.primary}}
       edges={['top']}>
       <View>
         <View style={{height: 50, flexDirection: 'row'}}>
@@ -66,11 +77,16 @@ export default function HomeScreen() {
             <FontAwesome5
               name="chart-pie"
               size={24}
-              color={'white'}></FontAwesome5>
+              color={theme[activeTheme].textSecondary}></FontAwesome5>
           </View>
           <View
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{fontSize: 20, color: 'white', fontWeight: 'bold'}}>
+            <Text
+              style={{
+                fontSize: 20,
+                color: theme[activeTheme].textSecondary,
+                fontWeight: 'bold',
+              }}>
               {' '}
               Dividend Income{' '}
             </Text>
@@ -78,35 +94,63 @@ export default function HomeScreen() {
           <View
             style={{width: 50, justifyContent: 'center', alignItems: 'center'}}>
             <TouchableOpacity onPress={() => setModalVisibility(true)}>
-              <EvilIcons name="plus" size={32} color={'white'}></EvilIcons>
+              <EvilIcons
+                name="plus"
+                size={32}
+                color={theme[activeTheme].textSecondary}></EvilIcons>
             </TouchableOpacity>
           </View>
         </View>
         <View
           style={{height: 90, justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{fontSize: 20, color: 'white'}}> Annually </Text>
-          <Text style={{fontSize: 24, color: 'white', fontWeight: 'bold'}}>
+          <Text style={{fontSize: 20, color: theme[activeTheme].textSecondary}}>
+            {' '}
+            Annually{' '}
+          </Text>
+          <Text
+            style={{
+              fontSize: 24,
+              color: theme[activeTheme].textSecondary,
+              fontWeight: 'bold',
+            }}>
             {formatDividend(dividends.annually)}
           </Text>
         </View>
         <View style={{height: 90, flexDirection: 'row'}}>
           <View
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{fontSize: 20, color: 'white'}}>Monthly</Text>
-            <Text style={{fontSize: 24, color: 'white', fontWeight: 'bold'}}>
+            <Text
+              style={{fontSize: 20, color: theme[activeTheme].textSecondary}}>
+              Monthly
+            </Text>
+            <Text
+              style={{
+                fontSize: 24,
+                color: theme[activeTheme].textSecondary,
+                fontWeight: 'bold',
+              }}>
               {formatDividend(dividends.monthly)}
             </Text>
           </View>
           <View
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{fontSize: 20, color: 'white'}}> Daily </Text>
-            <Text style={{fontSize: 24, color: 'white', fontWeight: 'bold'}}>
+            <Text
+              style={{fontSize: 20, color: theme[activeTheme].textSecondary}}>
+              {' '}
+              Daily{' '}
+            </Text>
+            <Text
+              style={{
+                fontSize: 24,
+                color: theme[activeTheme].textSecondary,
+                fontWeight: 'bold',
+              }}>
               {formatDividend(dividends.daily)}
             </Text>
           </View>
         </View>
       </View>
-      <View style={{flex: 1, backgroundColor: 'black'}}>
+      <View style={{flex: 1, backgroundColor: theme[activeTheme].background}}>
         <FlatList
           keyExtractor={(item) => item.stock.ticker}
           data={addedStocks}

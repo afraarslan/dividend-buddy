@@ -11,6 +11,7 @@ export default function StockEditModal(props) {
   const selectedStockInfo = useSelector(
     (state) => state.stocks.selectedStockInfo,
   );
+  const {theme, activeTheme} = useSelector((state) => state.profile);
   // const addedStocks = useSelector((state) => state.stocks.addedStocks);
   const [stockCount, setStockCount] = useState(
     selectedStockInfo ? selectedStockInfo.count : 0,
@@ -18,7 +19,9 @@ export default function StockEditModal(props) {
   const dispatch = useDispatch();
 
   return (
-    <Modal isVisible={true} style={{margin: 0, backgroundColor: 'black'}}>
+    <Modal
+      isVisible={true}
+      style={{margin: 0, backgroundColor: theme[activeTheme].background}}>
       <SafeAreaView style={{flex: 1}}>
         <View
           style={{
@@ -36,17 +39,17 @@ export default function StockEditModal(props) {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={{fontSize: 18, color: '#318d71'}}>Cancel</Text>
+            <Text style={{fontSize: 18, color: theme.text}}>Cancel</Text>
           </TouchableOpacity>
         </View>
-        <View style={{flex: 1, backgroundColor: 'black'}}>
+        <View style={{flex: 1, backgroundColor: theme[activeTheme].background}}>
           <View
             style={{
               padding: 20,
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={{fontSize: 40, fontWeight: 'bold', color: '#318d71'}}>
+            <Text style={{fontSize: 40, fontWeight: 'bold', color: theme.text}}>
               {stock && stock.ticker}
             </Text>
           </View>
@@ -55,7 +58,8 @@ export default function StockEditModal(props) {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={{fontSize: 32, color: 'white'}}>
+            <Text
+              style={{fontSize: 32, color: theme[activeTheme].textSecondary}}>
               {stock && stock.name}
             </Text>
           </View>
@@ -70,8 +74,8 @@ export default function StockEditModal(props) {
               style={{
                 padding: 8,
                 width: 200,
-                backgroundColor: '#1c1c1e',
-                color: 'white',
+                backgroundColor: theme[activeTheme].secondary,
+                color: theme[activeTheme].textSecondary,
                 fontSize: 24,
                 borderRadius: 12,
               }}

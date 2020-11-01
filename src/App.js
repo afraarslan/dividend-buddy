@@ -27,48 +27,51 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from './containers/home/Home';
 import SettingsScreen from './containers/settings/Settings';
-import { Provider } from 'react-redux';
-import store from './redux/configureStore'
+import {Provider} from 'react-redux';
+import store from './redux/configureStore';
 
-const Tab = createBottomTabNavigator()
+const Tab = createBottomTabNavigator();
 
 const App: () => React$Node = () => {
   return (
     <Provider store={store}>
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({route}) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            if(route.name==="Home"){
-              return <Ionicons name={"ios-home"} size={size} color={color} />;
-            }
-            else if (route.name==="Settings"){
-              return <SimpleLineIcons name={"settings"} size={size} color={color} />;
-            }
-            else return null;
-          },
-        })}
-        tabBarOptions={{
-          activeTintColor: "#3fc295",
-          inactiveTintColor: "gray",
-          activeBackgroundColor: "black",
-          inactiveBackgroundColor: "black",
-          safeAreaInsets: {
-            bottom: 0,
-            top:0,
-            color: "black"
-          },
-        }}
-      >
-        <Tab.Screen name="Home" component={HomeScreen}/>
-        <Tab.Screen name="Settings" component={SettingsScreen}/>
-      </Tab.Navigator>
-    </NavigationContainer>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={({route}) => ({
+            tabBarIcon: ({focused, color, size}) => {
+              let iconName;
+              if (route.name === 'Home') {
+                return <Ionicons name={'ios-home'} size={size} color={color} />;
+              } else if (route.name === 'Settings') {
+                return (
+                  <SimpleLineIcons
+                    name={'settings'}
+                    size={size}
+                    color={color}
+                  />
+                );
+              } else return null;
+            },
+          })}
+          tabBarOptions={{
+            activeTintColor: '#3fc295',
+            inactiveTintColor: 'gray',
+            activeBackgroundColor: 'black',
+            inactiveBackgroundColor: 'black',
+            safeAreaInsets: {
+              bottom: 0,
+              top: 0,
+              color: 'black',
+            },
+          }}>
+          <Tab.Screen name="Home" component={HomeScreen} />
+          <Tab.Screen name="Settings" component={SettingsScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
     </Provider>
   );
 };
